@@ -1,7 +1,76 @@
 #include "stm32f10x.h"
 typedef unsigned int uint;
 
+void led_red_bsrr()
+{
+	/*rgb 全亮
+	GPIOB_BSRR |= (1<<21);
+	GPIOB_BSRR |= (1<<16);
+	GPIOB_BSRR |= (1<<17);
 
+	rgb全灭
+	GPIOB_BSRR |= (1<<5);
+	GPIOB_BSRR |= (1<<0);
+	GPIOB_BSRR |= (1<<1);
+	*/
+
+	GPIOB_BSRR |= (1<<21);
+	GPIOB_BSRR |= (1<<0);
+	GPIOB_BSRR |= (1<<1);
+}
+
+void led_green_bsrr()
+{
+	GPIOB_BSRR |= (1<<5);
+	GPIOB_BSRR |= (1<<16);
+	GPIOB_BSRR |= (1<<1);
+}
+
+void led_blue_bsrr()
+{
+	GPIOB_BSRR |= (1<<5);
+	GPIOB_BSRR |= (1<<0);
+	GPIOB_BSRR |= (1<<17);
+}
+
+
+void led_red_brr()
+{
+	/*
+	GPIOB_BRR |= (1<<5);
+	GPIOB_BRR |= (1<<0);
+	GPIOB_BRR |= (1<<1);
+
+	GPIOB_BRR &= ~(1<<5);
+	GPIOB_BRR &= ~(1<<0);
+	GPIOB_BRR &= ~(1<<1);*/
+
+	GPIOB_BRR |= (1<<5);
+	GPIOB_BRR &= ~(1<<0);
+	GPIOB_BRR &= ~(1<<1);
+
+}
+
+void led_green_brr()
+{
+	GPIOB_BRR &= ~(1<<5);
+	GPIOB_BRR |= (1<<0);
+	GPIOB_BRR &= ~(1<<1);
+}
+
+void led_blue_brr()
+{
+	GPIOB_BRR &= ~(1<<5);
+	GPIOB_BRR &= ~(1<<0);
+	GPIOB_BRR |= (1<<1);
+}
+
+void led_all_on()
+{
+	GPIOB_ODR &= ~(1<<5);
+	GPIOB_ODR &= ~(1<<0);
+	GPIOB_ODR &= ~(1<<1);
+}
 void led_red()
 {
 	GPIOB_ODR &= ~(1<<5);
@@ -25,8 +94,8 @@ void led_blue()
 
 void led_out()
 {
-	GPIOB_ODR |= (1<<5);//red 灭
-	GPIOB_ODR |= (1<<0);//green 灭
+	GPIOB_ODR |= (1<<5);
+	GPIOB_ODR |= (1<<0);
 	GPIOB_ODR |= (1<<1);
 }
 
@@ -58,6 +127,17 @@ void delay_ms(uint delay_ms)
   }
 }
 
+void led_on(char a)
+{
+	switch(a)
+	{
+		case 'r' : led_red(); break;
+		case 'g' : led_green(); break;
+		case 'b' : led_blue(); break;
+		default  : led_all_on(); break;
+	}
+}
+
 int main(void)
 {
 
@@ -81,19 +161,31 @@ int main(void)
 	GPIOB_ODR |= (1<<0);//green 灭
 	GPIOB_ODR |= (1<<1);//blue 灭
 
+
+
+	GPIOB_BSRR &= ~0xffffffff;//清零
+	GPIOB_BRR  &= ~0xffff;//清零
+
+
+
 	for(;;)
 	{
-		led_red();
-		delay_ms(9);
+		led_on('q');
+		delay_ms(100);
 		led_out();
+		delay_ms(100);
 
-		led_green();
-		delay_ms(9);
-		led_out();
 
-		led_blue();
-		delay_ms(9);
+		led_on('q');
+		delay_ms(100);
 		led_out();
+		delay_ms(100);
+
+
+		led_on('1');
+		delay_ms(100);
+		led_out();
+		delay_ms(100);
 
 	}
 
@@ -105,12 +197,5 @@ int main(void)
 
 }
 
-
-
-
-
-
 void SystemInit(void){}
-	
-	
 	
