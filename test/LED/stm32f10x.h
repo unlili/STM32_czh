@@ -1,12 +1,16 @@
+#ifndef __STM32F10X_H__
+#define __STM32F10X_H__
 //外设 perirhral
 
 typedef unsigned int uint;
+typedef unsigned int uint32_t;
+typedef unsigned short uint16_t;
+
 
 #define PERIPH_BASE      (0x40000000)
 #define APB1_PERIPH_BASE PERIPH_BASE
 #define APB2_PERIPH_BASE (PERIPH_BASE+0x10000)
 #define AHB_PERIPH_BASE  (PERIPH_BASE+0x20000)
-
 /**/
 #define RCC_BASE   (AHB_PERIPH_BASE+0x1000)
 
@@ -19,7 +23,6 @@ typedef unsigned int uint;
 #define GPIOE_BASE (APB2_PERIPH_BASE+0x1800)
 #define GPIOF_BASE (APB2_PERIPH_BASE+0x2000)
 #define GPIOG_BASE (APB2_PERIPH_BASE+0x2400)
-
 /**/
 
 #define GPIOA_CRL    *(uint *)(GPIOA_BASE+0x00)
@@ -48,20 +51,62 @@ typedef unsigned int uint;
 #define GPIOF_ODR    *(uint *)(GPIOF_BASE+0x0c)
 #define GPIOG_ODR    *(uint *)(GPIOG_BASE+0x0c)
 
+#define GPIOA_BSRR  *(uint *)(GPIOA_BASE+0x10)
+#define GPIOB_BSRR  *(uint *)(GPIOB_BASE+0x10)
+#define GPIOC_BSRR  *(uint *)(GPIOC_BASE+0x10)
+#define GPIOD_BSRR  *(uint *)(GPIOD_BASE+0x10)
+#define GPIOE_BSRR  *(uint *)(GPIOE_BASE+0x10)
+#define GPIOF_BSRR  *(uint *)(GPIOF_BASE+0x10)
+#define GPIOG_BSRR  *(uint *)(GPIOG_BASE+0x10)
 
-#define GPIOA_BSRR *(uint *)(GPIOA_BASE+0x10)
-#define GPIOB_BSRR *(uint *)(GPIOB_BASE+0x10)
-#define GPIOC_BSRR *(uint *)(GPIOC_BASE+0x10)
-#define GPIOD_BSRR *(uint *)(GPIOD_BASE+0x10)
-#define GPIOE_BSRR *(uint *)(GPIOE_BASE+0x10)
-#define GPIOF_BSRR *(uint *)(GPIOF_BASE+0x10)
-#define GPIOG_BSRR *(uint *)(GPIOG_BASE+0x10)
+#define GPIOA_BRR  *(uint *)(GPIOA_BASE+0x14)
+#define GPIOB_BRR  *(uint *)(GPIOB_BASE+0x14)
+#define GPIOC_BRR  *(uint *)(GPIOC_BASE+0x14)
+#define GPIOD_BRR  *(uint *)(GPIOD_BASE+0x14)
+#define GPIOE_BRR  *(uint *)(GPIOE_BASE+0x14)
+#define GPIOF_BRR  *(uint *)(GPIOF_BASE+0x14)
+#define GPIOG_BRR  *(uint *)(GPIOG_BASE+0x14)
+
+typedef struct
+{
+	uint32_t CRL;
+	uint32_t CRH;
+	uint32_t IDR;
+	uint32_t ODR;
+	uint32_t BSRR;
+	uint32_t BRR;
+	uint32_t LCKR;
+}GPIO_TypeDef;
+
+#define GPIOA ((GPIO_TypeDef *)GPIOA_BASE)
+#define GPIOB ((GPIO_TypeDef *)GPIOB_BASE)
+#define GPIOC ((GPIO_TypeDef *)GPIOC_BASE)
+#define GPIOD ((GPIO_TypeDef *)GPIOD_BASE)
+#define GPIOE ((GPIO_TypeDef *)GPIOE_BASE)
+#define GPIOF ((GPIO_TypeDef *)GPIOF_BASE)
+#define GPIOG ((GPIO_TypeDef *)GPIOG_BASE)
 
 
-#define GPIOA_BRR *(uint *)(GPIOA_BASE+0x14)
-#define GPIOB_BRR *(uint *)(GPIOB_BASE+0x14)
-#define GPIOC_BRR *(uint *)(GPIOC_BASE+0x14)
-#define GPIOD_BRR *(uint *)(GPIOD_BASE+0x14)
-#define GPIOE_BRR *(uint *)(GPIOE_BASE+0x14)
-#define GPIOF_BRR *(uint *)(GPIOF_BASE+0x14)
-#define GPIOG_BRR *(uint *)(GPIOG_BASE+0x14)
+
+typedef struct 
+{
+	uint32_t CR;
+	uint32_t CFGR;
+	uint32_t CIR;
+	uint32_t APB2RSTR;
+	uint32_t APB1RSTR;
+	uint32_t AHBENR;
+	uint32_t APB2ENR;
+	uint32_t APB1ENR;
+	uint32_t BDCR;
+	uint32_t CSR;
+}RCC_TypeDef;
+
+
+#define RCC ((RCC_TypeDef*)RCC_BASE)
+
+
+#endif /*__STM32F10X_H__*/
+
+
+
