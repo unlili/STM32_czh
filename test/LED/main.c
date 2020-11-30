@@ -1,102 +1,103 @@
 #include "stm32f10x.h"
+#include "stm32f10x_gpio.h"
 typedef unsigned int uint;
 
 void led_red_bsrr()
 {
 	/*rgb 全亮
-	GPIOB_BSRR |= (1<<21);
-	GPIOB_BSRR |= (1<<16);
-	GPIOB_BSRR |= (1<<17);
+	GPIOB->BSRR |= (1<<21);
+	GPIOB->BSRR |= (1<<16);
+	GPIOB->BSRR |= (1<<17);
 
 	rgb全灭
-	GPIOB_BSRR |= (1<<5);
-	GPIOB_BSRR |= (1<<0);
-	GPIOB_BSRR |= (1<<1);
+	GPIOB->BSRR |= (1<<5);
+	GPIOB->BSRR |= (1<<0);
+	GPIOB->BSRR |= (1<<1);
 	*/
 
-	GPIOB_BSRR |= (1<<21);
-	GPIOB_BSRR |= (1<<0);
-	GPIOB_BSRR |= (1<<1);
+	GPIOB->BSRR |= (1<<21);
+	GPIOB->BSRR |= (1<<0);
+	GPIOB->BSRR |= (1<<1);
 }
 
 void led_green_bsrr()
 {
-	GPIOB_BSRR |= (1<<5);
-	GPIOB_BSRR |= (1<<16);
-	GPIOB_BSRR |= (1<<1);
+	GPIOB->BSRR |= (1<<5);
+	GPIOB->BSRR |= (1<<16);
+	GPIOB->BSRR |= (1<<1);
 }
 
 void led_blue_bsrr()
 {
-	GPIOB_BSRR |= (1<<5);
-	GPIOB_BSRR |= (1<<0);
-	GPIOB_BSRR |= (1<<17);
+	GPIOB->BSRR |= (1<<5);
+	GPIOB->BSRR |= (1<<0);
+	GPIOB->BSRR |= (1<<17);
 }
 
 
 void led_red_brr()
 {
 	/*
-	GPIOB_BRR |= (1<<5);
-	GPIOB_BRR |= (1<<0);
-	GPIOB_BRR |= (1<<1);
+	GPIOB->BRR |= (1<<5);
+	GPIOB->BRR |= (1<<0);
+	GPIOB->BRR |= (1<<1);
 
-	GPIOB_BRR &= ~(1<<5);
-	GPIOB_BRR &= ~(1<<0);
-	GPIOB_BRR &= ~(1<<1);*/
+	GPIOB->BRR &= ~(1<<5);
+	GPIOB->BRR &= ~(1<<0);
+	GPIOB->BRR &= ~(1<<1);*/
 
-	GPIOB_BRR |= (1<<5);
-	GPIOB_BRR &= ~(1<<0);
-	GPIOB_BRR &= ~(1<<1);
+	GPIOB->BRR |= (1<<5);
+	GPIOB->BRR &= ~(1<<0);
+	GPIOB->BRR &= ~(1<<1);
 
 }
 
 void led_green_brr()
 {
-	GPIOB_BRR &= ~(1<<5);
-	GPIOB_BRR |= (1<<0);
-	GPIOB_BRR &= ~(1<<1);
+	GPIOB->BRR &= ~(1<<5);
+	GPIOB->BRR |= (1<<0);
+	GPIOB->BRR &= ~(1<<1);
 }
 
 void led_blue_brr()
 {
-	GPIOB_BRR &= ~(1<<5);
-	GPIOB_BRR &= ~(1<<0);
-	GPIOB_BRR |= (1<<1);
+	GPIOB->BRR &= ~(1<<5);
+	GPIOB->BRR &= ~(1<<0);
+	GPIOB->BRR |= (1<<1);
 }
 
 void led_all_on()
 {
-	GPIOB_ODR &= ~(1<<5);
-	GPIOB_ODR &= ~(1<<0);
-	GPIOB_ODR &= ~(1<<1);
+	GPIOB->ODR &= ~(1<<5);
+	GPIOB->ODR &= ~(1<<0);
+	GPIOB->ODR &= ~(1<<1);
 }
 void led_red()
 {
-	GPIOB_ODR &= ~(1<<5);
-	GPIOB_ODR |= (1<<0);//green 灭
-	GPIOB_ODR |= (1<<1);//blue 灭
+	GPIO_ResetBits(GPIOB,GPIO_Pin_5);
+	GPIO_SetBits(GPIOB,GPIO_Pin_0);
+	GPIO_SetBits(GPIOB,GPIO_Pin_1);
 }
 
 void led_green()
 {
-	GPIOB_ODR |= (1<<5);//red 灭
-	GPIOB_ODR &= ~(1<<0);
-	GPIOB_ODR |= (1<<1);//blue 灭
+	GPIO_SetBits(GPIOB,GPIO_Pin_5);
+	GPIO_ResetBits(GPIOB,GPIO_Pin_0);
+	GPIO_SetBits(GPIOB,GPIO_Pin_1);
 }
 
 void led_blue()
 {
-	GPIOB_ODR |= (1<<5);//red 灭
-	GPIOB_ODR |= (1<<0);//green 灭
-	GPIOB_ODR &= ~(1<<1);
+	GPIO_SetBits(GPIOB,GPIO_Pin_5);
+	GPIO_SetBits(GPIOB,GPIO_Pin_0);
+	GPIO_ResetBits(GPIOB,GPIO_Pin_1);
 }
 
 void led_out()
 {
-	GPIOB_ODR |= (1<<5);
-	GPIOB_ODR |= (1<<0);
-	GPIOB_ODR |= (1<<1);
+	GPIOB->ODR |= (1<<5);
+	GPIOB->ODR |= (1<<0);
+	GPIOB->ODR |= (1<<1);
 }
 
 
@@ -138,64 +139,115 @@ void led_on(char a)
 	}
 }
 
+void select_led(uint16_t a)
+{
+	switch(a)
+	{
+		//001
+		case 1:
+			{
+				GPIO_ResetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_ResetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		//010
+		case 2:
+			{
+				GPIO_ResetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_ResetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		//011
+		case 3:
+			{
+				GPIO_ResetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		//100
+		case 4:
+			{
+				GPIO_SetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_ResetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_ResetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		//101
+		case 5:
+			{
+				GPIO_SetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_ResetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		//111
+		case 6:
+			{
+				GPIO_SetBits(GPIOB,GPIO_Pin_5);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_0);	
+				GPIO_SetBits(GPIOB,GPIO_Pin_1);	
+			}
+			break;
+		default:break;
+	}
+}
+
 int main(void)
 {
 
 	//开启端口GPIO_B时钟
-	RCC_APB2ENR |= (1<<3);
+	RCC->APB2ENR |= (1<<3);
 
 	//配置端口GPIO_PB0为输出  GREEN
-	GPIOB_CRL &= ~( (0xf) << (4*0));//清零
-	GPIOB_CRL |= ( (1) << (4*0));
+	GPIOB->CRL &= ~( (0xf) << (4*0));//清零
+	GPIOB->CRL |= ( (1) << (4*0));
 
 	//配置端口GPIO_PB1为输出  BLUE
-	GPIOB_CRL &= ~( (0xf) << (4*1));//清零
-	GPIOB_CRL |= ( (1) << (4*1));
+	GPIOB->CRL &= ~( (0xf) << (4*1));//清零
+	GPIOB->CRL |= ( (1) << (4*1));
 
 	//配置端口GPIO_PB5为输出  RED
-	GPIOB_CRL &= ~( (0xf) << (4*5));//清零
-	GPIOB_CRL |= ( (1) << (4*5));
+	GPIOB->CRL &= ~( (0xf) << (4*5));//清零
+	GPIOB->CRL |= ( (1) << (4*5));
 
 
-	GPIOB_ODR |= (1<<5);//red 灭
-	GPIOB_ODR |= (1<<0);//green 灭
-	GPIOB_ODR |= (1<<1);//blue 灭
-
-
-
-	GPIOB_BSRR &= ~0xffffffff;//清零
-	GPIOB_BRR  &= ~0xffff;//清零
+	GPIOB->ODR |= (1<<5);//red 灭
+	GPIOB->ODR |= (1<<0);//green 灭
+	GPIOB->ODR |= (1<<1);//blue 灭
 
 
 
-	for(;;)
+	GPIOB->BSRR &= ~0xffffffff;//清零
+	GPIOB->BRR  &= ~0xffff;//清零
+
+
+
+	while(1)
 	{
-		led_on('q');
-		delay_ms(100);
-		led_out();
-		delay_ms(100);
-
-
-		led_on('q');
-		delay_ms(100);
-		led_out();
-		delay_ms(100);
-
-
-		led_on('1');
-		delay_ms(100);
-		led_out();
-		delay_ms(100);
-
+		int i;
+		for(i=1; i<7 ; ++i)	
+		{
+			select_led(i);
+			delay_ms(9);
+			led_out();
+		}
 	}
-
 	/*
-	GPIOB_ODR &= ~(1<<5);
-	GPIOB_ODR &= ~(1<<0);
-	GPIOB_ODR &= ~(1<<1);
+	GPIOB->ODR &= ~(1<<5);
+	GPIOB->ODR &= ~(1<<0);
+	GPIOB->ODR &= ~(1<<1);
 	*/
-
 }
 
+
+
+
+
+
 void SystemInit(void){}
+	
+	
 	
